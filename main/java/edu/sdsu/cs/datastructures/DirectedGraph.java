@@ -4,6 +4,15 @@ import java.util.List;
 
 public class DirectedGraph<V> implements IGraph<V> {
 
+    String source;
+    String destination;
+
+    public DirectedGraph(){
+    }
+
+    public DirectedGraph(IGraph<V> data){
+    }
+
     @Override
     public void add(V vertexName) {
 
