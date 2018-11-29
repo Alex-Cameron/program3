@@ -1,16 +1,17 @@
 package edu.sdsu.cs.datastructures;
 
-import com.sun.javafx.geom.Edge;
-
 import java.util.LinkedList;
 import java.util.List;
 
 public class DirectedGraph<V> implements IGraph<V> {
 
-    public DirectedGraph(){
-    }
+    Vertex list[];
+    int vertices;
 
-    
+    public DirectedGraph(int v){
+        vertices = v;
+
+    }
 
     public class Vertex {
         public String name;
