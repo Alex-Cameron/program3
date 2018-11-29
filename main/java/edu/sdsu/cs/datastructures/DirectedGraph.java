@@ -8,7 +8,16 @@ public class DirectedGraph<V> implements IGraph<V> {
     }
 
     public String toString(){
-        return "Temp String";
+        String out = "Graph with " + adjacencyList.size() + " vertecies\n";
+        V keys[] = (V[]) adjacencyList.keySet().toArray();
+
+        for(int i = 0; i < keys.length; i++){
+            out += i + ": " + keys[i]+ "\n";
+            for(V dest : adjacencyList.get(keys[i])){
+                out += "    -" + dest +"\n";
+            }
+        }
+        return out;
     }
 
     @Override
