@@ -38,9 +38,11 @@ public class App {
             for (String line : fileLines) {
                 String[] toks = line.split(",");
                 for (String tok : toks) {
-                    if (!graph.contains(tok)) {
+                    if (!graph.contains(tok))
                         graph.add(tok);
-                    }
+                }
+                if (toks.length > 1){
+                    graph.connect(toks[0], toks[1]);
                 }
             }
         } catch (Exception e) {
