@@ -5,7 +5,6 @@ import java.util.List;
 
 public class DirectedGraph<V> implements IGraph<V> {
 
-    Vertex list[];
     int vertices;
 
     public DirectedGraph(int v){
@@ -15,7 +14,7 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     public class Vertex {
         public String name;
-        List<Edge> AdjacencyList = new LinkedList<>();
+        LinkedList<Edge>[] AdjacencyList;
     }
 
     public class Edge {
@@ -30,6 +29,9 @@ public class DirectedGraph<V> implements IGraph<V> {
         }
     }
 
+    public String toString(){
+        return "Temp String";
+    }
 
     @Override
     public void add(V vertexName) {
