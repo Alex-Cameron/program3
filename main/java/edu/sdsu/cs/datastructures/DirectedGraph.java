@@ -1,3 +1,12 @@
+/*
+program3
+Alex Bailey
+cssc0846
+
+Cody Edgington
+cssc0889
+ */
+
 package edu.sdsu.cs.datastructures;
 
 import java.util.*;
@@ -8,11 +17,8 @@ public class DirectedGraph<V> implements IGraph<V> {
     public DirectedGraph(){
     }
 
-    public DirectedGraph(IGraph<V> data){
-    }
-
     public String toString(){
-        String out = "Graph with " + adjacencyList.size() + " vertecies\n";
+        String out = "Graph with " + adjacencyList.size() + " verticies\n";
         V keys[] = (V[]) adjacencyList.keySet().toArray();
 
         for(int i = 0; i < keys.length; i++){
@@ -79,29 +85,20 @@ public class DirectedGraph<V> implements IGraph<V> {
         }
     }
 
-    //    public static Comparator<LinkedList> pathComparator = new Comparator<LinkedList>(){
-//
-//        @Override
-//        public int compare(LinkedList<V> c1, LinkedList<> c2) {
-//            return (int) (c1.getId() - c2.getId());
-//        }
-//    };
     @Override
     public List<V> shortestPath(V start, V destination) {
-        TreeMap<V, LinkedList<V>> paths = new TreeMap<V, LinkedList<V>>();
-        LinkedList<V> visited = new LinkedList<V>();
-        PriorityQueue<V> toBeVisited = new PriorityQueue<V>();
+        if(adjacencyList.get(start) == null || adjacencyList.get(destination) == null){
+            throw new NoSuchElementException("Start or end was not found");
+        }
+        TreeMap<V, LinkedList<V>> paths = new TreeMap<>();
+        LinkedList<V> visited = new LinkedList<>();
+        PriorityQueue<V> toBeVisited = new PriorityQueue<>();
         toBeVisited.add(start);
         paths.put(start, new LinkedList<V>());
         while(!toBeVisited.isEmpty()) {
             V node = toBeVisited.remove();
             LinkedList<V> path = paths.get(node);
-//            if(paths.get(node) != null && paths.get(node).size() > 0){
-//                path = new LinkedList(paths.get(node));
-//            } else {
-//                path = new LinkedList<V>();
-//            }
-//            path.add(node);
+
             if(node == destination){
                 return path;
             } else {
@@ -121,10 +118,8 @@ public class DirectedGraph<V> implements IGraph<V> {
                             }
                         }
                     }
-
                 }
             }
-
         }
         return null;
     }
@@ -141,11 +136,13 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public IGraph<V> connectedGraph(V origin) {
-        LinkedList<V> or = adjacencyList.get(origin);
-        LinkedList<V> added = new LinkedList<V>();
-        PriorityQueue<V> toBeAdded = new PriorityQueue<V>();
+        if (!adjacencyList.containsKey(origin)){
+            throw new java.util.NoSuchElementException("There is no element matching the input");
+        }
+        LinkedList<V> added = new LinkedList<>();
+        PriorityQueue<V> toBeAdded = new PriorityQueue<>();
         toBeAdded.addAll(adjacencyList.get(origin));
-        DirectedGraph<V> graph = new DirectedGraph<V>();
+        DirectedGraph<V> graph = new DirectedGraph<>();
         while(!toBeAdded.isEmpty()){
             V vertex = toBeAdded.remove();
             added.add(vertex);
