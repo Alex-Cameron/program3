@@ -10,7 +10,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        DirectedGraph<IGraph> newGraph = new DirectedGraph<>();
+        DirectedGraph<String> newGraph = new DirectedGraph<>();
 
         if (args.length > 1) {
             System.out.println("Error: only one input argument allowed");
@@ -19,16 +19,16 @@ public class App {
             String csvFile = "/Users/cameronbailey/IdeaProjects/program3/src/main/java/edu/sdsu/cs/datastructures/layout.csv";
             File defaultFile = new File(csvFile);
             Path filePath = Paths.get(defaultFile.getPath());
-            readFile(filePath, defaultFile, newGraph);
+            readFile(filePath, defaultFile);
         } else if (args.length == 1) {
             String argumentPath = args[0];
             File inputFile = new File(argumentPath);
             Path filePath = Paths.get(inputFile.getPath());
-            readFile(filePath, inputFile, newGraph);
+            readFile(filePath, inputFile);
         }
     }
 
-    private static void readFile(Path path, File file, IGraph graph){
+    private static void readFile(Path path, File file){
         if (!file.exists() || !file.canRead()) {
             System.out.println("Error: Unable to open file. Verify the file exists, is accessible, and meets the syntax requirements.");
             System.exit(1);
@@ -39,12 +39,9 @@ public class App {
             for (String line : fileLines) {
                 String[] toks = line.split(",");
                 for (String tok : toks) {
-                    if (!graph.contains(tok)){
-                        graph.add(tok);
-                    }
+                    tokens.add(tok.trim());
                 }
             }
-            System.out.println(graph);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -5,16 +5,21 @@ import java.util.List;
 
 public class DirectedGraph<V> implements IGraph<V> {
 
-    int vertices;
+    List<V> adjacencyList = new LinkedList<>();
 
-    public DirectedGraph(int v){
-        vertices = v;
+    public DirectedGraph(){
+    }
 
+    public DirectedGraph(IGraph<V> data){
     }
 
     public class Vertex {
-        public String name;
-        LinkedList<Edge>[] AdjacencyList;
+        public V name;
+        List<V> adjacencyList = new LinkedList();
+
+        public Vertex(V name){
+            this.name = name;
+        }
     }
 
     public class Edge {
@@ -35,12 +40,16 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public void add(V vertexName) {
-
+        if (!adjacencyList.contains(vertexName)) {
+            Vertex v = new Vertex(vertexName);
+        }
     }
 
     @Override
     public void connect(V start, V destination) {
-
+        if (!adjacencyList.contains(start) || !adjacencyList.contains(destination)){
+            throw new java.util.NoSuchElementException("Either the source or destination does not exist");
+        }
     }
 
     @Override
