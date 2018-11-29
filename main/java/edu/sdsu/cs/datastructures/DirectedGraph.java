@@ -1,8 +1,3 @@
-package edu.sdsu.cs.datastructures;
-
-import java.util.LinkedList;
-import java.util.List;
-
 public class DirectedGraph<V> implements IGraph<V> {
     TreeMap<V, LinkedList<V>> adjacencyList = new TreeMap<V, LinkedList<V>>();
 
@@ -21,8 +16,6 @@ public class DirectedGraph<V> implements IGraph<V> {
         if (!adjacencyList.containsKey(vertexName)) {
             adjacencyList.put(vertexName, new LinkedList<V>());
         }
-
-
     }
 
     @Override
@@ -40,7 +33,7 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public boolean contains(V label) {
-        return false;
+        return adjacencyList.containsKey(label);
     }
 
     @Override
@@ -65,7 +58,14 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public List<V> shortestPath(V start, V destination) {
-        return null;
+//        TreeMap<V, List<V>> paths = new TreeMap<V, List<V>>();
+//        LinkedList<V> visited = new LinkedList<V>();
+//        PriorityQueue<V> toBeVisited = new PriorityQueue<V>();
+//        toBeVisited.add(start);
+//        while(!toBeVisited.isEmpty()) {
+//
+//        }
+          return null;
     }
 
     @Override
@@ -80,5 +80,23 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public IGraph<V> connectedGraph(V origin) {
-        return null;
+        LinkedList<V> or = adjacencyList.get(origin);
+        LinkedList<V> added = new LinkedList<V>();
+        PriorityQueue<V> toBeAdded = new PriorityQueue<V>();
+        toBeAdded.addAll(adjacencyList.get(origin));
+        DirectedGraph<V> graph = new DirectedGraph<V>();
+        while(!toBeAdded.isEmpty()){
+            V vertex = toBeAdded.remove();
+            added.add(vertex);
+            graph.add(vertex);
+            for(V destination : adjacencyList.get(vertex)){
+                graph.connect(vertex, destination);
+                if(!added.contains(destination)){
+                    toBeAdded.add(destination);
+                }
+            }
+
+        }
+        return graph;
     }
+}
