@@ -19,16 +19,16 @@ public class App {
             String csvFile = "/Users/cameronbailey/IdeaProjects/program3/src/main/java/edu/sdsu/cs/datastructures/layout.csv";
             File defaultFile = new File(csvFile);
             Path filePath = Paths.get(defaultFile.getPath());
-            readFile(filePath, defaultFile);
+            readFile(filePath, defaultFile, newGraph);
         } else if (args.length == 1) {
             String argumentPath = args[0];
             File inputFile = new File(argumentPath);
             Path filePath = Paths.get(inputFile.getPath());
-            readFile(filePath, inputFile);
+            readFile(filePath, inputFile, newGraph);
         }
     }
 
-    private static void readFile(Path path, File file){
+    private static void readFile(Path path, File file, IGraph graph){
         if (!file.exists() || !file.canRead()) {
             System.out.println("Error: Unable to open file. Verify the file exists, is accessible, and meets the syntax requirements.");
             System.exit(1);
@@ -39,10 +39,12 @@ public class App {
             for (String line : fileLines) {
                 String[] toks = line.split(",");
                 for (String tok : toks) {
-                    if (tok.trim().length() > 0)
-                        tokens.add(tok.trim());
+                    if (!graph.contains(tok)){
+                        graph.add(tok);
+                    }
                 }
             }
+            System.out.println(graph);
         } catch (Exception e) {
             System.out.println(e);
         }
