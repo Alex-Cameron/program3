@@ -15,10 +15,11 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     public class Vertex {
         public V name;
-        List<V> adjacencyList = new LinkedList();
+        List<V> adjacencyList;
 
         public Vertex(V name){
             this.name = name;
+            this.adjacencyList = new LinkedList<>();
         }
     }
 
@@ -42,6 +43,7 @@ public class DirectedGraph<V> implements IGraph<V> {
     public void add(V vertexName) {
         if (!adjacencyList.contains(vertexName)) {
             Vertex v = new Vertex(vertexName);
+            adjacencyList.add(v);
         }
     }
 
