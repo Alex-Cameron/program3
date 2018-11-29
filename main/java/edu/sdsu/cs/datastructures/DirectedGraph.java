@@ -1,4 +1,14 @@
-import sun.awt.image.ImageWatched;
+
+/*
+program3
+Alex Bailey
+cssc0846
+
+Cody Edgington
+cssc0889
+ */
+
+package edu.sdsu.cs.datastructures;
 
 import java.util.*;
 
@@ -8,11 +18,9 @@ public class DirectedGraph<V> implements IGraph<V> {
     public DirectedGraph() {
     }
 
-    public DirectedGraph(IGraph<V> data) {
-    }
 
-    public String toString() {
-        String out = "Graph with " + adjacencyList.size() + " vertecies\n";
+    public String toString(){
+        String out = "Graph with " + adjacencyList.size() + " verticies\n";
         V keys[] = (V[]) adjacencyList.keySet().toArray();
 
         for (int i = 0; i < keys.length; i++) {
@@ -98,6 +106,7 @@ public class DirectedGraph<V> implements IGraph<V> {
         //
         while(toBeVisited.size() > 0){
             V node = toBeVisited.remove();
+
             if(node.equals(destination)){
                 LinkedList<V> toReturn = new LinkedList<V>();
                 toReturn.add(start);
@@ -114,6 +123,7 @@ public class DirectedGraph<V> implements IGraph<V> {
                     path.remove(neighbor);
                     if(unvisited.contains(neighbor)){
                         toBeVisited.add(neighbor);
+
                     }
                 }
             }
@@ -134,6 +144,9 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public IGraph<V> connectedGraph(V origin) {
+        if (!adjacencyList.containsKey(origin)){
+            throw new java.util.NoSuchElementException("There is no element matching the input");
+        }
         LinkedList<V> or = adjacencyList.get(origin);
         LinkedList<V> added = new LinkedList<V>();
         PriorityQueue<V> toBeAdded = new PriorityQueue<V>();
