@@ -10,7 +10,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        DirectedGraph<String> newGraph = new DirectedGraph<>();
+        IGraph<String> newGraph = new DirectedGraph<>();
 
         if (args.length > 1) {
             System.out.println("Error: only one input argument allowed");
@@ -19,27 +19,28 @@ public class App {
             String csvFile = "/Users/cameronbailey/IdeaProjects/program3/src/main/java/edu/sdsu/cs/datastructures/layout.csv";
             File defaultFile = new File(csvFile);
             Path filePath = Paths.get(defaultFile.getPath());
-            readFile(filePath, defaultFile);
+            readFile(filePath, defaultFile, newGraph);
         } else if (args.length == 1) {
             String argumentPath = args[0];
             File inputFile = new File(argumentPath);
             Path filePath = Paths.get(inputFile.getPath());
-            readFile(filePath, inputFile);
+            readFile(filePath, inputFile, newGraph);
         }
     }
 
-    private static void readFile(Path path, File file){
+    private static void readFile(Path path, File file, IGraph<String> graph){
         if (!file.exists() || !file.canRead()) {
             System.out.println("Error: Unable to open file. Verify the file exists, is accessible, and meets the syntax requirements.");
             System.exit(1);
         }
         try {
             List<String> fileLines = Files.readAllLines(path, Charset.defaultCharset());
-            ArrayList<String> tokens = new ArrayList<String>();
             for (String line : fileLines) {
                 String[] toks = line.split(",");
                 for (String tok : toks) {
-                    tokens.add(tok.trim());
+                    if (!graph.contains(tok)) {
+                        graph.add(tok);
+                    }
                 }
             }
         } catch (Exception e) {

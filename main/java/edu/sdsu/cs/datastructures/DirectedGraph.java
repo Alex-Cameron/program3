@@ -1,10 +1,11 @@
+package edu.sdsu.cs.datastructures;
+
+import java.util.*;
+
 public class DirectedGraph<V> implements IGraph<V> {
     TreeMap<V, LinkedList<V>> adjacencyList = new TreeMap<V, LinkedList<V>>();
 
     public DirectedGraph(){
-    }
-
-    public DirectedGraph(IGraph<V> data){
     }
 
     public String toString(){
@@ -20,8 +21,8 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public void connect(V start, V destination) {
-        if (!adjacencyList.containsKey(start)){
-            throw new java.util.NoSuchElementException("There is no element matching the start, add first");
+        if (!adjacencyList.containsKey(start) || !adjacencyList.containsKey(destination)){
+            throw new java.util.NoSuchElementException("There is no element matching the start or destination");
         }
         adjacencyList.get(start).add(destination);
     }
@@ -38,6 +39,9 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public void disconnect(V start, V destination) {
+        if (!adjacencyList.containsKey(start) || !adjacencyList.containsKey(destination)){
+            throw new java.util.NoSuchElementException("There is no element matching the start or destination");
+        }
         adjacencyList.get(start).remove(destination);
     }
 
@@ -48,16 +52,25 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public Iterable<V> neighbors(V vertexName) {
-        return adjacencyList.get(vertexName);
+        if (!adjacencyList.containsKey(vertexName)){
+            throw new java.util.NoSuchElementException("The vertex is not present in the graph");
+        }
+            return adjacencyList.get(vertexName);
     }
 
     @Override
     public void remove(V vertexName) {
+        if (!adjacencyList.containsKey(vertexName)){
+            throw new java.util.NoSuchElementException("The vertex is not present in the graph");
+        }
         adjacencyList.remove(vertexName);
     }
 
     @Override
     public List<V> shortestPath(V start, V destination) {
+        if (!adjacencyList.containsKey(start) || !adjacencyList.containsKey(destination)){
+            throw new java.util.NoSuchElementException("There is no element matching the start, add first");
+        }
 //        TreeMap<V, List<V>> paths = new TreeMap<V, List<V>>();
 //        LinkedList<V> visited = new LinkedList<V>();
 //        PriorityQueue<V> toBeVisited = new PriorityQueue<V>();
@@ -75,7 +88,8 @@ public class DirectedGraph<V> implements IGraph<V> {
 
     @Override
     public Iterable<V> vertices() {
-        return (List)adjacencyList;
+        List<V> vertices = new LinkedList<V>(adjacencyList.keySet());
+        return vertices;
     }
 
     @Override
